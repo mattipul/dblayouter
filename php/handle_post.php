@@ -204,7 +204,34 @@ class HandlePost{
 		}
 		
 		///////////
-	
+		
+		//SYNC
+		
+		if( $type == 21 ){
+			$tab_id=$_POST['tab_id'];
+			$xml=$_POST['xml'];
+			$this->controller->controller_sync($tab_id, $xml);
+		}
+		
+		///////////
+		
+		//GET TAB OBJECTS
+		
+		if( $type == 22 ){
+			$tab_id=$_POST['tab_id'];
+			$this->controller->controller_get_tab_objects($tab_id);
+		}
+		
+		///////////
+
+		//GET TAB PROPERTIES
+
+		if( $type == 23 ){
+			$tab_id=$_POST['tab_id'];
+			$this->controller->controller_get_tab_properties($tab_id);
+		}
+
+		///////////
 	}
 
 }

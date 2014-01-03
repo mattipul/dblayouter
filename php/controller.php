@@ -13,11 +13,13 @@ require_once("table.php");
 require_once("user.php");
 require_once("file.php");
 require_once("settings.php");
+require_once("eobject.php");
 require_once("permissions.php");
 require_once("searchterm.php");
 require_once("db.php");
 require_once("hash.php");
 require_once("xml.php");
+
 
 class Controller{
 
@@ -389,6 +391,62 @@ class Controller{
 		}
 	}
 	
+	//////
+	
+	//SYNC
+	
+	function controller_sync($tab_id, $xml){
+		if($tab_id!=NULL && $xml!=NULL){
+			$tabObj=new Tab;
+			$tabObj->tab_id=$tab_id;
+			$tabObj->xml=$xml;
+			$this->DB->db_tab_change_xml($tabObj);
+			echo 'Success!';
+		}else{
+			echo 'Error!';
+		}
+	}
+	
+	//////
+	
+	//GET TAB OBJECTS
+	
+	function controller_get_tab_objects($tab_id){
+		if($tab_id!=NULL){
+			$tabObj=new Tab;
+			$tabObj->tab_id=$tab_id;
+			
+			$tabRet=$this->DB->db_tab_get($tabObj);
+			if($tabRet->xml!=NULL){
+				$this->xml->xml_init_tab($tabRet->xml);
+				$object_json=$this->xml->xml_parse_tab_objects();
+				echo $object_json;
+			}
+		}else{
+			echo 'Error!';
+		}
+	}
+	
+	//////
+
+	//GET TAB PROPERTIES
+
+	function controller_get_tab_properties($tab_id){
+		if($tab_id!=NULL){
+			$tabObj=new Tab;
+			$tabObj->tab_id=$tab_id;
+			
+			$tabRet=$this->DB->db_tab_get($tabObj);
+			if($tabRet->xml!=NULL){
+				$this->xml->xml_init_tab($tabRet->xml);
+				$properties_json=$this->xml->xml_parse_tab_properties();
+				echo $properties_json;
+			}
+		}else{
+			echo 'Error!';
+		}
+	}
+
 	//////
 	
 }

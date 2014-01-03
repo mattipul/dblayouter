@@ -17,6 +17,7 @@ function controller_load_layouts(){
 function controller_cur_tab(tab){
 	$("#current_tab").html(tab.name);
 	current_tab=tab;
+	current_tab.draw();
 }
 
 function controller_load_tabs(id){
@@ -43,6 +44,7 @@ function controller_get_database_callback(data){
 			var tab_name=db.layout_arr[i].layout_tab_arr[j].tab_name;
 			var tab_type=db.layout_arr[i].layout_tab_arr[j].tab_type;
 			var tabObj=new Tab(tab_name, tab_id, tab_type);
+			//alert(tabObj.id + "asf ");
 			layoutObj.addTab(tabObj);
 		}
 		current_database.databaseAddLayout(layoutObj);
@@ -456,3 +458,102 @@ function controller_destroy_tablayout_structure(){
 }
 
 ///////////
+
+//SYNC
+
+function controller_sync_callback(data){
+	current_tab.refresh();
+}
+
+function controller_sync(){
+	var variables=new Object();
+	variables["type"]=21;
+	variables["tab_id"]=current_tab.id;
+	variables["xml"]=current_tab.genXML();
+	ajaxMethods.ajaxPost(variables, controller_sync_callback);	
+}
+
+///////////
+
+//CHANGE TAB STYLE
+
+function controller_change_tab_style(){
+	var width=$("#tab_properties_width").val();
+	var height=$("#tab_properties_height").val();
+	var background=$("#tab_properties_background").val();
+	var fontfamily=$("#tab_properties_fontfamily").val();
+
+	current_tab.setStyle("width", width);
+	current_tab.setStyle("height", height);
+	current_tab.setStyle("background-color", background);
+	current_tab.setStyle("font-family", fontfamily);
+}
+
+///////////
+
+//CHANGE OBJECT STYLE
+
+function controller_change_object_style(){
+	
+}
+
+///////////
+
+//CHANGE OBJECT DATA
+
+function controller_change_object_data_text(){
+	$("#object_data_header").html("Change text");
+	$("#object_data_div").html("<span>Text: </span><input id='object_data_changed' type='text' class='kentta' />");
+	$( "#button_change_object_data" ).click(function() {
+		ui_close_dialog();
+		editor_size_obj.setData($("#object_data_changed").val());
+	});
+}
+
+function controller_change_object_data_img(){
+	$("#object_data_header").html("Change image source");
+	$("#object_data_div").html("<span>Image: </span><input id='object_data_changed' type='text' class='kentta' />");
+	$( "#button_change_object_data" ).click(function() {
+		ui_close_dialog();
+		editor_size_obj.setData($("#object_data_changed").val());
+	});
+}
+
+function controller_change_object_data_type(){
+	if(editor_size_obj.type === "text"){
+		controller_change_object_data_text();
+	}
+	if(editor_size_obj.type === "image"){
+		controller_change_object_data_img();
+	}
+}
+
+function controller_change_object_data_structure(){
+	ui_close_dialog();
+	ui_open_dialog('#pimennys_data');
+	controller_change_object_data_type();
+}
+
+///////////
+
+//DELETE OBJECT
+
+function controller_delete_object(){
+	editor_size_obj.destroy();
+	ui_menubar_close();
+	for(var i=0; i<current_tab.obj_arr.length; i++){
+		if(objectEquals(editor_size_obj, current_tab.obj_arr[i])){
+			current_tab.obj_arr.remove(i,i);
+		}
+	}
+}
+
+///////////
+
+//REFRESH
+
+
+//////////
+
+
+

@@ -1,5 +1,5 @@
 
-function EditorObject(maindiv, type, x, y){
+function EditorObject(maindiv, type, x, y, w, h, style, data){
 	this.maindiv=maindiv;
 	this.x=x;
 	this.y=y;

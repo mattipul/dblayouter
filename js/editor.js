@@ -21,9 +21,12 @@ Editor.prototype.editor_create_object=function(e){
 	if(this.editor_on==1){
 		var mx=mouseX(e)-$(this.editor_div).offset().left;
 		var my=mouseY(e)-$(this.editor_div).offset().top;
-		var object = new EditorObject(this.editor_div, this.editor_type, mx, my);
+		//var object = new EditorObject(this.editor_div, this.editor_type, mx, my);
+		var object=new EOObject(this.editor_div, "#layout_ui_records", this.editor_type, mx, my, 50, 50, "", "");
+		object.goEdit();
 		current_tab.addObject(object);
 		this.editor_on=0;
 	}
 }
+
 

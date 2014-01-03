@@ -1,10 +1,13 @@
 <?php
 
 require_once("tablejoin.php");
+require_once("eobject.php");
+require_once("tabstyle.php");
 
 class Xml{
 
 	private $xmlsqljoins;
+	private $xmltab;
 
 	function xml_init_sqljoins($xmlstr){
 		$this->xmlsqljoins = new SimpleXMLElement($xmlstr);
@@ -22,6 +25,37 @@ class Xml{
 			$join_list[]=$joinObj;
 		}
 		return json_encode($join_list);
+	}
+	
+	function xml_init_tab($xmlstr){
+		$this->xmltab = new SimpleXMLElement($xmlstr);
+	}
+
+	function xml_parse_tab_properties(){
+		$style_list=array();
+		foreach ($this->xmltab->properties->style as $style) {
+			$styleObj=new TabStyle;
+			$styleObj->attr=$style["attr"];
+			$styleObj->data=$style["data"];
+			$style_list[]=$styleObj;
+		}
+		return json_encode($style_list);
+	}
+	
+	function xml_parse_tab_objects(){
+		$obj_list=array();
+		foreach ($this->xmltab->objects->object as $object) {
+			$objObj=new EObject;
+			$objObj->x=$object["x"];
+			$objObj->y=$object["y"];
+			$objObj->w=$object["w"];
+			$objObj->h=$object["h"];
+			$objObj->type=$object["type"];
+			$objObj->style=$object["style"];
+			$objObj->data=$object["data"];
+			$obj_list[]=$objObj;
+		}
+		return json_encode($obj_list);
 	}
 
 }

@@ -48,7 +48,7 @@
 	<div onclick="ui_open_layout_search();" class="painike" style="padding:0px;float:left;text-align:center;width:100px;">
 		<img src="img/search.png" style="height:30px;"/><br/><span style="font-size:12px">Search</span>
 	</div>
-	<div class="painike" style="padding:0px;float:left;text-align:center;width:100px;">
+	<div onclick="controller_sync();" class="painike" style="padding:0px;float:left;text-align:center;width:100px;">
 		<img src="img/refresh.png" style="height:30px;"/><br/><span style="font-size:12px">Refresh</span>
 	</div>
 </div>
@@ -79,6 +79,8 @@
 	</div>
 	
 	<div class="layout_child" id="layout_records">
+		<div id="layout_ui_records">
+		</div>
 	</div>
 	
 	<div class="layout_child" id="layout_search">
@@ -152,27 +154,21 @@
 
 
 
-<div class="valikko_menubar" id="teksti_prop">
-<a class="menubar_a" href="#">Text</a><br/>
+<div class="valikko_menubar" id="text_prop">
+<a class="menubar_a" href="#" onclick="controller_change_object_data_structure()">Text</a><br/>
 <a class="menubar_a" href="#" onclick="ui_open_style_dialog();">Style</a><br/>
-<a class="menubar_a" href="#" onclick="current_obj.tofront()">To front</a><br/>
-<a class="menubar_a" href="#" onclick="current_obj.toback()">To back</a><br/>
-<a class="menubar_a" href="#" onclick="current_obj.destroy_element()">Delete object</a><br/><br/>
+<a class="menubar_a" href="#" onclick="controller_delete_object();">Delete object</a><br/><br/>
 </div>
 
 <div class="valikko_menubar" id="div_prop">
 <a class="menubar_a" href="#" onclick="ui_open_style_dialog();">Style</a><br/>
-<a class="menubar_a" href="#" onclick="">To front</a><br/>
-<a class="menubar_a" href="#" onclick="">To back</a><br/>
-<a class="menubar_a" href="#" onclick="current_obj.destroy_element()">Delete object</a><br/><br/>
+<a class="menubar_a" href="#" onclick="controller_delete_object();">Delete object</a><br/><br/>
 </div>
 
 <div class="valikko_menubar" id="image_prop">
-<a class="menubar_a" href="#">Source</a><br/>
+<a class="menubar_a" href="#" onclick="controller_change_object_data_structure()">Source</a><br/>
 <a class="menubar_a" href="#" onclick="ui_open_style_dialog();">Style</a><br/>
-<a class="menubar_a" href="#" onclick="">To front</a><br/>
-<a class="menubar_a" href="#" onclick="">To back</a><br/>
-<a class="menubar_a" href="#" onclick="current_obj.destroy_element()">Delete object</a><br/><br/>
+<a class="menubar_a" href="#" onclick="controller_delete_object();">Delete object</a><br/><br/>
 </div>
 
 
@@ -195,16 +191,44 @@
 
 <div id="pimennys" onclick="">
 
+	<div class="pimennys_child" id="pimennys_data">
+		<h4 style="float:left" id="object_data_header"></h4><a style="float:right" href="#" onclick="ui_close_dialog();">Close</a>
+		<div style="clear:both"></div><hr/>
+		<div id="object_data_div">
+
+		</div>
+		<hr/>
+		<a href="#" style="" id="button_change_object_data" onclick="" class="nappula2">Change</a><br/>
+	</div>
+
 	<div class="pimennys_child" id="pimennys_style">
-		<h4>Style properties</h4><hr/>
-		<div id="style_parameters"></div><hr/>
-		<a href="#" style="" onclick="ui_close_dialog();" class="nappula2">Ok</a><br/>
+		<h4 style="float:left">Object properties</h4><a style="float:right" href="#" onclick="ui_close_dialog();">Close</a>
+		<div style="clear:both"></div><hr/>
+		<div id="style_parameters">
+			<table>
+				<tr><td style="width:30%"><span>Background: </span></td><td><input class="kentta" id="object_properties_background" type="text"/></div></td></tr>
+				<tr><td style="width:30%"><span>Font-family: </span></td><td><input class="kentta" id="object_properties_fontfamily" type="text"/></div></td></tr>
+				<tr><td style="width:30%"><span>Font-size: </span></td><td><input class="kentta" id="object_properties_fontsize" type="text"/></div></td></tr>
+				<tr><td style="width:30%"><span>Color: </span></td><td><input class="kentta" id="object_properties_color" type="text"/></div></td></tr>
+			</table>
+		</div>
+		<hr/>
+		<a href="#" style="" onclick="ui_close_dialog();controller_change_object_style();" class="nappula2">Ok</a><br/>
 	</div>
 	
 	<div class="pimennys_child" id="pimennys_wrench">
-		<h4>Tab properties</h4><hr/>
-		<div id="style_parameters"></div><hr/>
-		<a href="#" style="" onclick="ui_close_dialog();" class="nappula2">Ok</a><br/>
+		<h4 style="float:left">Tab properties</h4><a style="float:right" href="#" onclick="ui_close_dialog();">Close</a>
+		<div style="clear:both"></div><hr/>
+		<div id="style_parameters">
+			<table>
+				<tr><td style="width:30%"><span>Width: </span></td><td><input class="kentta" id="tab_properties_width" type="text"/></div></td></tr>
+				<tr><td style="width:30%"><span>Height: </span></td><td><input class="kentta" id="tab_properties_height" type="text"/></div></td></tr>
+				<tr><td style="width:30%"><span>Background: </span></td><td><input class="kentta" id="tab_properties_background" type="text"/></div></td></tr>
+				<tr><td style="width:30%"><span>Font-family: </span></td><td><input class="kentta" id="tab_properties_fontfamily" type="text"/></div></td></tr>
+			</table>
+		</div>
+		<hr/>
+		<a href="#" style="" onclick="ui_close_dialog();controller_change_tab_style();" class="nappula2">Save properties</a><br/>
 	</div>
 	
 	<!--- -->
@@ -478,13 +502,17 @@
 
 
 </body>
+<script src="js/editor_objects/eo_image.js"></script>
+<script src="js/editor_objects/eo_text.js"></script>
+<script src="js/editor_objects/eo_div.js"></script>
+<script src="js/editor_objects/eo_object.js"></script>
+
 <script src="js/mouse.js"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="js/jquery_ui.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/globals.js"></script>
 <script src="js/ajaxgetpost.js"></script>
-<script src="js/editor_object.js"></script>
 <script src="js/editor.js"></script>
 <script src="js/tab.js"></script>
 <script src="js/layout.js"></script>

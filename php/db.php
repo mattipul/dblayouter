@@ -268,6 +268,14 @@ class DB{
 		$this->db_exec_esc("UPDATE DBTab SET tab_type=:type WHERE id_tab=:id", $hide_array);
 	}
 	
+	function db_tab_change_xml($tab){
+		$tabObj=new Tab;
+		$tabObj=$tab;
+		
+		$hide_array=array(":id"=>$tabObj->tab_id, ":xmldata"=>$tabObj->xml);
+		$this->db_exec_esc("UPDATE DBTab SET xml=:xmldata WHERE id_tab=:id", $hide_array);
+	}
+	
 	function db_tab_get($tab){
 		$hide_array=array(":id"=>$tab->tab_id);
 		$ret_object=$this->db_select_esc("SELECT * FROM DBTab WHERE id_tab=:id;", $hide_array);
