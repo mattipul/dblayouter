@@ -45,6 +45,9 @@
 	<div onclick="ui_open_layout_records()" class="painike" style="padding:0px;float:left;text-align:center;width:100px;">
 		<img src="img/records.png" style="height:30px;"/><br/><span style="font-size:12px">Records</span>
 	</div>
+	<div onclick="ui_open_layout_maintenance();" class="painike" style="padding:0px;float:left;text-align:center;width:100px;">
+		<img src="img/maintenance.png" style="height:30px;"/><br/><span style="font-size:12px">Maintenance</span>
+	</div>
 	<div onclick="ui_open_layout_search();" class="painike" style="padding:0px;float:left;text-align:center;width:100px;">
 		<img src="img/search.png" style="height:30px;"/><br/><span style="font-size:12px">Search</span>
 	</div>
@@ -83,7 +86,14 @@
 		</div>
 	</div>
 	
+	<div class="layout_child" id="layout_maintenance">
+		<div id="layout_ui_maintenance">
+		</div>
+	</div>
+	
 	<div class="layout_child" id="layout_search">
+		<div id="layout_ui_search">
+		</div>
 	</div>
 
 </div>

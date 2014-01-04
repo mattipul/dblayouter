@@ -8,6 +8,8 @@ function EOImage(x,y,w,h,data){
 	this.style;
 	this.obj;
 	this.objRecord;
+	this.objMaintenance;
+	this.objSearch;
 	this.prevHTML;
 }
 
@@ -31,11 +33,54 @@ EOImage.prototype.createEdit = function(){
 }
 
 EOImage.prototype.createRecord = function(data){
+	var divObj=document.createElement("div");
 	var imgObj=document.createElement("img");
-	imgObj.style.top=this.y+"px";
-	imgObj.style.left=this.x+"px";
-	imgObj.style.width=this.w+"px";
-	imgObj.style.height=this.h+"px";
-	imgObj.style.position="absolute";
-	this.objRecord=imgObj;
+	imgObj.src=this.data;
+	divObj.style.top=this.y+"px";
+	divObj.style.left=this.x+"px";
+	divObj.style.width=this.w+"px";
+	divObj.style.height=this.h+"px";
+	divObj.style.position="absolute";
+	divObj.style.borderStyle="dotted";
+	divObj.style.borderWidth="1px";
+	$(divObj).append(imgObj);
+	imgObj.style.width="100%";
+	imgObj.style.height="100%";
+	this.objRecord=divObj;
 }
+
+EOImage.prototype.createSearch = function(data){
+	var divObj=document.createElement("div");
+	var imgObj=document.createElement("img");
+	imgObj.src=this.data;
+	divObj.style.top=this.y+"px";
+	divObj.style.left=this.x+"px";
+	divObj.style.width=this.w+"px";
+	divObj.style.height=this.h+"px";
+	divObj.style.position="absolute";
+	divObj.style.borderStyle="dotted";
+	divObj.style.borderWidth="1px";
+	$(divObj).append(imgObj);
+	imgObj.style.width="100%";
+	imgObj.style.height="100%";
+	this.objSearch=divObj;
+}
+
+EOImage.prototype.createMaintenance = function(data){
+	var divObj=document.createElement("div");
+	var imgObj=document.createElement("img");
+	imgObj.src=this.data;
+	divObj.style.top=this.y+"px";
+	divObj.style.left=this.x+"px";
+	divObj.style.width=this.w+"px";
+	divObj.style.height=this.h+"px";
+	divObj.style.position="absolute";
+	divObj.style.borderStyle="dotted";
+	divObj.style.borderWidth="1px";
+	$(divObj).append(imgObj);
+	imgObj.style.width="100%";
+	imgObj.style.height="100%";
+	this.objMaintenance=divObj;
+}
+
+

@@ -51,11 +51,22 @@ class Xml{
 			$objObj->w=$object["w"];
 			$objObj->h=$object["h"];
 			$objObj->type=$object["type"];
-			$objObj->style=$object["style"];
+			$objObj->style=$this->xml_parse_tab_objects_object($object);
 			$objObj->data=$object["data"];
 			$obj_list[]=$objObj;
 		}
 		return json_encode($obj_list);
+	}
+	
+	function xml_parse_tab_objects_object($object){
+		$obj_list=array();
+		foreach ($object->style as $style) {
+			$objObj=new TabStyle;
+			$objObj->attr=$style["attr"];
+			$objObj->data=$style["data"];
+			$obj_list[]=$objObj;
+		}
+		return $obj_list;
 	}
 
 }

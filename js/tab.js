@@ -3,7 +3,6 @@ function Tab(name, id, type){
 	this.name=name;
 	this.id=id;
 	this.type=type;
-	this.record_div="#layout_ui_records";
 	this.styles=new Array();
 	this.editor=new Editor();
 	this.editor.editor_set_maindiv("#layout_ui_edit");
@@ -23,9 +22,15 @@ Tab.prototype.addObject = function(obj){
 Tab.prototype.draw=function(){
 
 	//this.refresh();
+	$("#layout_ui_records").html("");
+	$("#layout_ui_records").removeAttr('style');
+	$("#layout_ui_maintenance").html("");
+	$("#layout_ui_maintenance").removeAttr('style');
+	$("#layout_ui_search").html("");
+	$("#layout_ui_search").removeAttr('style');
+	$(this.editor.editor_div).html("");
 
 //EDIT
-	$(this.editor.editor_div).html("");
 	for(var i=0; i<this.styles.length; i++){
 		$(this.editor.editor_div).css(this.styles[i].attr, this.styles[i].data);
 	}
@@ -36,15 +41,37 @@ Tab.prototype.draw=function(){
 /////
 
 //RECORDS
-
-	$(this.record_div).html("");
-	for(var i=0; i<this.styles.length; i++){
-		$(this.record_div).css(this.styles[i].attr, this.styles[i].data);
+	if(this.type==1){
+		for(var i=0; i<this.styles.length; i++){
+			$("#layout_ui_records").css(this.styles[i].attr, this.styles[i].data);
+		}
+		for(var i=0; i<this.obj_arr.length; i++){
+			this.obj_arr[i].goRecords();
+		}
 	}
-	for(var i=0; i<this.obj_arr.length; i++){
-		this.obj_arr[i].goRecords();
-	}
+/////
 
+//MAINTENANCE
+	if(this.type==2){
+		for(var i=0; i<this.styles.length; i++){
+			$("#layout_ui_maintenance").css(this.styles[i].attr, this.styles[i].data);
+		}
+		for(var i=0; i<this.obj_arr.length; i++){
+			this.obj_arr[i].goMaintenance();
+		}
+	}
+/////
+
+//SEARCH
+	if(this.type==0){
+		alert("dg");
+		for(var i=0; i<this.styles.length; i++){
+			$("#layout_ui_search").css(this.styles[i].attr, this.styles[i].data);
+		}
+		for(var i=0; i<this.obj_arr.length; i++){
+			this.obj_arr[i].goSearch();
+		}
+	}
 /////
 }
 
@@ -65,10 +92,10 @@ Tab.prototype.genXML=function(){
 		var y=$(aobj).position().top;
 		var w=$(aobj).width();
 		var h=$(aobj).height();
-		var style="";
+		var style=this.obj_arr[i].genXML();
 		var data=this.obj_arr[i].data;
 		var type=this.obj_arr[i].type;
-		xml=xml+"<object x='"+x+"' y='"+y+"' w='"+w+"' h='"+h+"' type='"+type+"' style='"+style+"' data='"+data+"' />";
+		xml=xml+"<object x='"+x+"' y='"+y+"' w='"+w+"' h='"+h+"' type='"+type+"' column='' data='"+data+"'>"+style+"</object>";
 	}
 	xml=xml+"</objects>";	
 	
@@ -86,7 +113,7 @@ Tab.prototype.genArrObj=function(){
 	ajaxMethods.ajaxPost(variables, function(data){
 		var objects=jQuery.parseJSON( data );	
 		for(var i=0; i<objects.length; i++){
-			var object=new EOObject(this_s.editor.editor_div, "#layout_ui_records", objects[i].type[0], objects[i].x[0], objects[i].y[0], objects[i].w[0], objects[i].h[0], objects[i].style[0], objects[i].data[0]);
+			var object=new EOObject(this_s.editor.editor_div, objects[i].type[0], objects[i].x[0], objects[i].y[0], objects[i].w[0], objects[i].h[0], objects[i].style, objects[i].data[0], objects[i].column[0]);
 			this_s.addObject(object);
 		}
 	});
@@ -123,7 +150,7 @@ Tab.prototype.refresh=function(){
 	ajaxMethods.ajaxPost(variables, function(data){
 		var objects=jQuery.parseJSON( data );	
 		for(var i=0; i<objects.length; i++){
-			var object=new EOObject(this_s.editor.editor_div, "#layout_ui_records", objects[i].type[0], objects[i].x[0], objects[i].y[0], objects[i].w[0], objects[i].h[0], objects[i].style[0], objects[i].data[0]);
+			var object=new EOObject(this_s.editor.editor_div, objects[i].type[0], objects[i].x[0], objects[i].y[0], objects[i].w[0], objects[i].h[0], objects[i].style, objects[i].data[0], objects[i].column[0]);
 			this_s.addObject(object);
 		}
 
@@ -136,8 +163,9 @@ Tab.prototype.refresh=function(){
 			for(var i=0; i<styles.length; i++){
 				this_s.setStyle(styles[i].attr[0], styles[i].data[0]);
 			}
+			this_s.draw();
 		});
-		this_s.draw();
+		
 	});
 
 

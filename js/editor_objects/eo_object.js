@@ -1,14 +1,18 @@
 
-function EOObject(maindiv, recorddiv, type, x, y, w, h, style, data){
+function EOObject(maindiv, type, x, y, w, h, style, data, column){
 	this.maindiv=maindiv;
-	this.recorddiv=recorddiv;
+	this.recorddiv="#layout_ui_records";
+	this.maintenancediv="#layout_ui_maintenance";
+	this.searchdiv="#layout_ui_search";
 	this.type=type;
 	this.x=x;
 	this.y=y;
 	this.w=w;
 	this.h=h;
 	this.object;
-	this.styles=style;
+	this.column=column;
+	this.styles=new Array();
+	this.styles=this.styles.concat(style);
 	this.data=data;
 	this.createTypeObject(this.type, this.data);
 }
@@ -19,6 +23,14 @@ EOObject.prototype.goEdit=function(){
 
 EOObject.prototype.goRecords=function(){
 	this.drawRecords();
+}
+
+EOObject.prototype.goSearch=function(){
+	this.drawSearch();
+}
+
+EOObject.prototype.goMaintenance=function(){
+	this.drawMaintenance();
 }
 
 EOObject.prototype.createTypeObject=function(type, data){
@@ -55,8 +67,10 @@ EOObject.prototype.setData=function(data){
 
 EOObject.prototype.setStyle=function(attr, data){
 	var styleObj=new Object();
-	styleObj["attr"]=attr;
-	styleObj["data"]=data;
+	styleObj.attr=new Array();
+	styleObj.data=new Array();
+	styleObj.attr[0]=attr;
+	styleObj.data[0]=data;
 	this.styles.push(styleObj);
 	$(this.object.obj).css(attr, data);
 }
@@ -67,11 +81,57 @@ EOObject.prototype.drawEdit=function(){
 	this.object.prevHTML=$(this.object.obj).html();
 	this.makeDraggable();
 	this.drawSizeDiv();
+	for(var i=0; i<this.styles.length; i++){
+		 try {
+			if(this.styles[i].attr[0]!==undefined) {
+				$(this.object.obj).css(this.styles[i].attr[0], this.styles[i].data[0]);
+			}
+		 }catch(e){
+			 
+		 }	
+	}
 }
 
 EOObject.prototype.drawRecords=function(){
 	this.object.createRecord(this.data);
 	$(this.recorddiv).append(this.object.objRecord); 
+	for(var i=0; i<this.styles.length; i++){
+		 try {
+			if(this.styles[i].attr[0]!==undefined) {
+				$(this.object.objRecord).css(this.styles[i].attr[0], this.styles[i].data[0]);
+			}
+		 }catch(e){
+			 
+		 }
+	}
+}
+
+EOObject.prototype.drawMaintenance=function(){
+	this.object.createMaintenance(this.data);
+	$(this.maintenancediv).append(this.object.objMaintenance); 
+	for(var i=0; i<this.styles.length; i++){
+		 try {
+			if(this.styles[i].attr[0]!==undefined) {
+				$(this.object.objMaintenance).css(this.styles[i].attr[0], this.styles[i].data[0]);
+			}
+		 }catch(e){
+			 
+		 }
+	}
+}
+
+EOObject.prototype.drawSearch=function(){
+	this.object.createSearch(this.data);
+	$(this.searchdiv).append(this.object.objSearch); 
+	for(var i=0; i<this.styles.length; i++){
+		 try {
+			if(this.styles[i].attr[0]!==undefined) {
+				$(this.object.objSearch).css(this.styles[i].attr[0], this.styles[i].data[0]);
+			}
+		 }catch(e){
+			 
+		 }
+	}
 }
 
 EOObject.prototype.makeDraggable=function(){
@@ -113,6 +173,24 @@ EOObject.prototype.drawSizeDiv=function(){
 	$( divObj ).bind( "mouseup", function(e) {
 		editor_size_on=0;
 	});
+}
+
+EOObject.prototype.genXML=function(){
+	var xml="";
+
+	for(var i=0; i<this.styles.length; i++){
+		if(this.styles[i]!==undefined){
+			try {
+				if(this.styles[i].attr[0]!==undefined){
+					xml=xml+"<style attr='"+this.styles[i].attr[0]+"' data='"+this.styles[i].data[0]+"' />";
+				}
+			}catch(e){
+			 
+			}
+		}
+	}
+
+	return xml;
 }
 
 EOObject.prototype.destroy=function(){

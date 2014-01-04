@@ -8,6 +8,8 @@ function EOText(x,y,w,h,data){
 	this.data=data;
 	this.obj;
 	this.objRecord;
+	this.objMaintenance;
+	this.objSearch;
 	this.prevHTML;
 }
 
@@ -24,6 +26,28 @@ EOText.prototype.createEdit = function(){
 	textObj.style.borderStyle="dotted";
 	textObj.style.borderWidth="1px";
 	this.obj=textObj;
+}
+
+EOText.prototype.createSearch = function(data){
+	var textObj=document.createElement("span");
+	textObj.innerHTML=data;
+	textObj.style.top=this.y+"px";
+	textObj.style.left=this.x+"px";
+	textObj.style.width=this.w+"px";
+	textObj.style.height=this.h+"px";
+	textObj.style.position="absolute";
+	this.objSearch=textObj;
+}
+
+EOText.prototype.createMaintenance = function(data){
+	var textObj=document.createElement("span");
+	textObj.innerHTML=data;
+	textObj.style.top=this.y+"px";
+	textObj.style.left=this.x+"px";
+	textObj.style.width=this.w+"px";
+	textObj.style.height=this.h+"px";
+	textObj.style.position="absolute";
+	this.objMaintenance=textObj;
 }
 
 EOText.prototype.createRecord = function(data){

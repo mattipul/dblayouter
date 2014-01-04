@@ -7,6 +7,8 @@ function EODiv(x,y,w,h){
 	this.style;
 	this.obj;
 	this.objRecord;
+	this.objMaintenance;
+	this.objSearch;
 	this.prevHTML;
 }
 
@@ -33,3 +35,25 @@ EODiv.prototype.createRecord = function(data){
 	divObj.style.position="absolute";
 	this.objRecord=divObj;
 }
+
+EODiv.prototype.createSearch = function(data){
+	var divObj=document.createElement("div");
+	divObj.style.top=this.y+"px";
+	divObj.style.left=this.x+"px";
+	divObj.style.width=this.w+"px";
+	divObj.style.height=this.h+"px";
+	divObj.style.position="absolute";
+	this.objSearch=divObj;
+}
+
+EODiv.prototype.createMaintenance = function(data){
+	var divObj=document.createElement("div");
+	divObj.style.top=this.y+"px";
+	divObj.style.left=this.x+"px";
+	divObj.style.width=this.w+"px";
+	divObj.style.height=this.h+"px";
+	divObj.style.position="absolute";
+	this.objMaintenance=divObj;
+}
+
+

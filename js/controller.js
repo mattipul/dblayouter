@@ -128,6 +128,21 @@ function controller_get_table_list(){
 
 //////////
 
+//GET ROW
+
+function controller_get_row_callback(data){
+	
+}
+
+function controller_get_row(){
+	var variables=new Object();
+	variables["type"]=3;
+	$("#table_names_select").html("");
+	ajaxMethods.ajaxPost(variables, controller_get_row_callback);
+}
+
+//////////
+
 //CHANGE NAME (COLUMN & TABLE)
 
 function controller_change_name_column_callback(data){
@@ -494,7 +509,15 @@ function controller_change_tab_style(){
 //CHANGE OBJECT STYLE
 
 function controller_change_object_style(){
+	var fontfamily=$("#object_properties_fontfamily").val();
+	var fontsize=$("#object_properties_fontsize").val();
+	var background=$("#object_properties_background").val();
+	var color=$("#object_properties_color").val();
 	
+	editor_size_obj.setStyle("font-family", fontfamily);
+	editor_size_obj.setStyle("font-size", fontsize);
+	editor_size_obj.setStyle("background-color", background);
+	editor_size_obj.setStyle("color", color);
 }
 
 ///////////
@@ -550,10 +573,7 @@ function controller_delete_object(){
 
 ///////////
 
-//REFRESH
 
-
-//////////
 
 
 

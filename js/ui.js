@@ -82,6 +82,8 @@ function ui_layout_adjust_height(){
 	$('#layout_ui').height( height_layout-160 );
 	$('#layout_ui').width( $('#statusbar').width()-100 );
 	$('#layout_records').height( height_layout-160 );
+	$('#layout_maintenance').height( height_layout-160 );
+	$('#layout_search').height( height_layout-160 );
 	$('#layout_ui_tools').height( height_layout-160 );
 }
 
@@ -106,10 +108,13 @@ function ui_open_layout_records(){
 
 function ui_open_layout_search(){
 	ui_hide_layout_child();
-	$("#layout_records").css("display", "block");
+	$("#layout_search").css("display", "block");
 }
 
-
+function ui_open_layout_maintenance(){
+	ui_hide_layout_child();
+	$("#layout_maintenance").css("display", "block");
+}
 
 
 
