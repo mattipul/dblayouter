@@ -1,19 +1,22 @@
 
 function EOObject(maindiv, type, x, y, w, h, style, data, column){
-	this.maindiv=maindiv;
-	this.recorddiv="#layout_ui_records";
-	this.maintenancediv="#layout_ui_maintenance";
-	this.searchdiv="#layout_ui_search";
-	this.type=type;
 	this.x=x;
 	this.y=y;
 	this.w=w;
 	this.h=h;
+	
+	this.maindiv=maindiv;
+	this.recorddiv="#layout_ui_records";
+	this.maintenancediv="#layout_ui_maintenance";
+	this.searchdiv="#layout_ui_search";
+	
+	this.type=type;
 	this.object;
 	this.column=column;
 	this.styles=new Array();
 	this.styles=this.styles.concat(style);
 	this.data=data;
+	
 	this.createTypeObject(this.type, this.data);
 }
 
@@ -34,10 +37,6 @@ EOObject.prototype.goMaintenance=function(){
 }
 
 EOObject.prototype.createTypeObject=function(type, data){
-	//IMG 1
-	//TEXT 2
-	//DIV 3
-	
 	if(type==="image"){
 		this.object=new EOImage(this.x, this.y, this.w, this.h, data);
 	}

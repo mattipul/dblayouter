@@ -3,6 +3,8 @@
 require_once("tablejoin.php");
 require_once("eobject.php");
 require_once("tabstyle.php");
+require_once("topological_sort.php");
+require_once("graph_node.php");
 
 class Xml{
 

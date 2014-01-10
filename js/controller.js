@@ -136,8 +136,6 @@ function controller_get_row_callback(data){
 
 function controller_get_row(){
 	var variables=new Object();
-	variables["type"]=3;
-	$("#table_names_select").html("");
 	ajaxMethods.ajaxPost(variables, controller_get_row_callback);
 }
 
